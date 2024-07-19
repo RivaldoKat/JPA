@@ -21,8 +21,24 @@ public class MappingsApplication {
 		return runner -> {
 //			createInstructor(appDAO);
 //			findInstructorById(appDAO);
-			deleteInstructor(appDAO);
+//			findInstructorDetailById(appDAO);
+//			deleteInstructor(appDAO);
+			deleteInstructorDetail(appDAO);
 		};
+	}
+
+	private void deleteInstructorDetail(AppDAO appDAO) {
+		int theId = 3;
+		System.out.println("Deleting the user of ID: " +  theId);
+		appDAO.deleteInstructorDetailById(theId);
+		System.out.println("Done!!");
+	}
+
+	private void findInstructorDetailById(AppDAO appDAO) {
+
+		int id = 3;
+		System.out.println("Instructor with ID:" + id);
+		System.out.println(appDAO.findInstructorDetailById(id));
 	}
 
 	private void deleteInstructor(AppDAO appDAO) {
@@ -35,14 +51,14 @@ public class MappingsApplication {
 
 	private void findInstructorById(AppDAO appDAO) {
 
-		int theId = 1;
+		int theId = 3;
 		System.out.println("User of the ID:" + theId);
 		System.out.println(appDAO.findInstructorById(theId));
 	}
 
 	private void createInstructor(AppDAO appDAO) {
-		Instructor temp = new Instructor("Katlego", "Sekome", "riv@gmail.com");
-		InstructorDetail tempIntr = new InstructorDetail("Youtube.com/Riv", "Coding");
+		Instructor temp = new Instructor("Rivaldo", "Sekome", "riva@gmail.com");
+		InstructorDetail tempIntr = new InstructorDetail("Youtube.com/Riva", "Coding");
 
 		temp.setInstructorDetail(tempIntr);
 

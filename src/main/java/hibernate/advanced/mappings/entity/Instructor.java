@@ -1,6 +1,7 @@
 package hibernate.advanced.mappings.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -45,5 +46,14 @@ public class Instructor {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Instructor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email+ "}";
     }
 }
