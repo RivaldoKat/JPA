@@ -22,7 +22,7 @@ public class AppDAOImpl implements AppDAO{
     @Override
     @Transactional
     public void save(Instructor instructor){
-        entityManager.persist(instructor);
+        entityManager.merge(instructor);
     }
 
     @Override
