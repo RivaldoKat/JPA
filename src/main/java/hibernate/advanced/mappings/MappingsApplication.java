@@ -1,6 +1,7 @@
 package hibernate.advanced.mappings;
 
 import hibernate.advanced.mappings.dao.AppDAO;
+import hibernate.advanced.mappings.entity.Course;
 import hibernate.advanced.mappings.entity.Instructor;
 import hibernate.advanced.mappings.entity.InstructorDetail;
 import org.springframework.boot.CommandLineRunner;
@@ -23,8 +24,31 @@ public class MappingsApplication {
 //			findInstructorById(appDAO);
 //			findInstructorDetailById(appDAO);
 //			deleteInstructor(appDAO);
-			deleteInstructorDetail(appDAO);
+//			deleteInstructorDetail(appDAO);
+			createInstructorWithCourses(appDAO);
 		};
+	}
+
+	private void createInstructorWithCourses(AppDAO appDAO) {
+		Instructor temp = new Instructor("Rivaldo", "Sekome", "riva@gmail.com");
+		InstructorDetail tempIntr = new InstructorDetail("Youtube.com/Riva", "Video Games");
+
+		temp.setInstructorDetail(tempIntr);
+
+		System.out.println("Saving instructor:" + temp);
+		appDAO.save(temp);
+		System.out.println("Done!");
+
+		Course course = new Course("Cosc");
+		Course course1 = new Course("SMTH");
+
+		temp.add(course);
+		temp.add(course1);
+
+		System.out.println("The course: " + temp.getCourses());
+		appDAO.save(temp);
+
+		System.out.println("Done!");
 	}
 
 	private void deleteInstructorDetail(AppDAO appDAO) {

@@ -4,9 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 @Entity
 @Table(name="instructor")
 public class Instructor {
@@ -30,23 +35,21 @@ public class Instructor {
     private int id;
 
     @Column(name="first_name")
-    private String firstName;
+    private final String firstName;
 
     @Column(name="last_name")
-    private String lastName;
+    private final String lastName;
 
     @Column(name="email")
-    private String email;
+    private final String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
 
-    public Instructor(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
+    @OneToMany(mappedBy= "instructor", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    private List<Course> courses;
+
 
     @Override
     public String toString() {
@@ -55,5 +58,16 @@ public class Instructor {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email+ "}";
+    }
+
+    public void add(Course course) {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+
+        courses.add(course);
+
+        assert course != null;
+        course.setInstructor(this);
     }
 }

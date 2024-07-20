@@ -3,9 +3,11 @@ package hibernate.advanced.mappings.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 @Entity
 @Table(name="instructor_detail")
 public class InstructorDetail {
@@ -28,17 +30,12 @@ public class InstructorDetail {
     private int id;
 
     @Column(name="youtube_channel")
-    private String youtubeChannel;
+    private final String youtubeChannel;
 
     @Column(name="hobby")
-    private String hobby;
+    private final String hobby;
 
     @OneToOne(mappedBy = "instructorDetail", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Instructor instructor;
-
-    public InstructorDetail(String youtubeChannel, String hobby) {
-        this.youtubeChannel = youtubeChannel;
-        this.hobby = hobby;
-    }
 
 }
