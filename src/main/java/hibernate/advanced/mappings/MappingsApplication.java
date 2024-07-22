@@ -25,8 +25,22 @@ public class MappingsApplication {
 //			findInstructorDetailById(appDAO);
 //			deleteInstructor(appDAO);
 //			deleteInstructorDetail(appDAO);
-			createInstructorWithCourses(appDAO);
+//			createInstructorWithCourses(appDAO);
+			findInstructorWithCourses(appDAO);
 		};
+	}
+
+	private void findInstructorWithCourses(AppDAO appDAO) {
+		int theId = 1;
+		System.out.println("Finding the instructor by ID: " + theId);
+
+		Instructor instructor = appDAO.findInstructorById(theId);
+
+		System.out.println("Instructor: " + instructor);
+		System.out.println("The associated courses: " + instructor.getCourses());
+
+
+
 	}
 
 	private void createInstructorWithCourses(AppDAO appDAO) {
