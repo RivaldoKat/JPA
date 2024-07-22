@@ -1,7 +1,10 @@
 package hibernate.advanced.mappings.dao;
 
+import hibernate.advanced.mappings.entity.Course;
 import hibernate.advanced.mappings.entity.Instructor;
 import hibernate.advanced.mappings.entity.InstructorDetail;
+
+import java.util.List;
 
 public interface AppDAO  {
 
@@ -15,4 +18,5 @@ public interface AppDAO  {
 
     void deleteInstructorDetailById(int theId);
 
+    List<Course> findCoursesByInstructorId(int theId);
 }
