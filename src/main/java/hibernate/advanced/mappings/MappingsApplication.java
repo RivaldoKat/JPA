@@ -1,10 +1,7 @@
 package hibernate.advanced.mappings;
 
 import hibernate.advanced.mappings.dao.AppDAO;
-import hibernate.advanced.mappings.entity.Course;
-import hibernate.advanced.mappings.entity.Instructor;
-import hibernate.advanced.mappings.entity.InstructorDetail;
-import hibernate.advanced.mappings.entity.Review;
+import hibernate.advanced.mappings.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,11 +21,88 @@ public class MappingsApplication {
 
 		return runner -> {
 
-//			createCourseAndReviews(appDAO);
+//			createCourseAndStudents(appDAO);
 
-//			retrieveCourseAndReviews(appDAO);
-			deleteCourseAndReviews(appDAO);
+//			findCourseAndStudents(appDAO);
+
+//			findStudentAndCourses(appDAO);
+
+//			addMoreCoursesForStudent(appDAO);
+
+//			deleteCourse(appDAO);
+
+			deleteStudent(appDAO);
+
 		};
+
+	}
+
+	private void deleteStudent(AppDAO appDAO) {
+
+		int theId = 1;
+		System.out.println("Deleting student id: "  + theId);
+
+		appDAO.deleteStudentById(theId);
+
+		System.out.println("Done");
+	}
+
+	private void addMoreCoursesForStudent(AppDAO appDAO) {
+
+		int theId = 2;
+		Student theStudent = appDAO.findCourseAndStudentsByStudentId(theId);
+
+		// create more courses
+		Course theCourse = new Course("JPA/Hibernate");
+		Course theCourse1 = new Course("Springboot");
+
+		// add courses to student
+		theStudent.addCourse(theCourse);
+		theStudent.addCourse(theCourse1);
+
+		System.out.println("Updating the student: " + theStudent);
+		System.out.println("associated courses: " + theStudent.getCourses());
+
+		appDAO.update(theStudent);
+	}
+
+	private void findStudentAndCourses(AppDAO appDAO) {
+
+		int theId = 2;
+		Student theStudent = appDAO.findCourseAndStudentsByStudentId(theId);
+
+		System.out.println("Loaded student: " + theStudent);
+		System.out.println("Courses enrolled in: " + theStudent.getCourses());
+	}
+
+	private void findCourseAndStudents(AppDAO appDAO) {
+
+		int theId = 10;
+		Course theCourse = appDAO.findCourseAndStudentsByCourseId(theId);
+		System.out.println("Loaded course:" + theCourse);
+		System.out.println("The student enrolled: " + theCourse.getStudents());
+	}
+
+	private void createCourseAndStudents(AppDAO appDAO) {
+
+		// create a course
+		Course course = new Course("Pacman - How to score one million points");
+
+		// create the student
+		Student student = new Student("Thabang", "Sekoem", "thabangS@gamil.com");
+		Student student1 = new Student("Katlego", "Sekome", "katS@gmail.com");
+
+		// add students to the course
+		course.addStudent(student);
+		course.addStudent(student1);
+
+		// save the course and associated students
+		System.out.println("Saving the course: " + course);
+		System.out.println("Associated students: " + course.getStudents());
+
+		appDAO.save(course);
+
+		System.out.println("Done");
 
 	}
 

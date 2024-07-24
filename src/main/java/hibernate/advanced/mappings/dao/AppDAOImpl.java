@@ -3,6 +3,7 @@ package hibernate.advanced.mappings.dao;
 import hibernate.advanced.mappings.entity.Course;
 import hibernate.advanced.mappings.entity.Instructor;
 import hibernate.advanced.mappings.entity.InstructorDetail;
+import hibernate.advanced.mappings.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -136,5 +137,50 @@ public class AppDAOImpl implements AppDAO{
 
         // execute the query
         return query.getSingleResult();
+    }
+
+    @Override
+    public Course findCourseAndStudentsByCourseId(int theId) {
+        // create query
+        TypedQuery<Course> query = entityManager.createQuery(
+                "select c from Course c "
+                        + "JOIN FETCH c.students "
+                        + "where c.id = :data", Course.class
+        );
+        query.setParameter("data", theId);
+
+        // execute the query
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Student findCourseAndStudentsByStudentId(int theId) {
+        // create query
+        TypedQuery<Student> query = entityManager.createQuery(
+                "select s from Student s "
+                        + "JOIN FETCH s.courses "
+                        + "where s.id = :data", Student.class
+        );
+        query.setParameter("data", theId);
+
+        // execute the query
+        return query.getSingleResult();
+    }
+
+    @Override
+    @Transactional
+    public void update(Student theStudent) {
+        entityManager.merge(theStudent);
+    }
+
+    @Override
+    @Transactional
+    public void deleteStudentById(int theId) {
+
+        // retrieve the student
+        Student theStudent = entityManager.find(Student.class, theId);
+
+        // delete the student
+        entityManager.remove(theStudent);
     }
 }

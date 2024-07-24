@@ -3,6 +3,7 @@ package hibernate.advanced.mappings.dao;
 import hibernate.advanced.mappings.entity.Course;
 import hibernate.advanced.mappings.entity.Instructor;
 import hibernate.advanced.mappings.entity.InstructorDetail;
+import hibernate.advanced.mappings.entity.Student;
 
 import java.util.List;
 
@@ -33,4 +34,12 @@ public interface AppDAO  {
     void save(Course course);
 
     Course findCourseAndReviewsByCourseId(int theId);
+
+    Course findCourseAndStudentsByCourseId(int theId);
+
+    Student findCourseAndStudentsByStudentId(int theId);
+
+    void update(Student theStudent);
+
+    void deleteStudentById(int theId);
 }
