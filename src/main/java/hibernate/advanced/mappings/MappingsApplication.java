@@ -4,6 +4,7 @@ import hibernate.advanced.mappings.dao.AppDAO;
 import hibernate.advanced.mappings.entity.Course;
 import hibernate.advanced.mappings.entity.Instructor;
 import hibernate.advanced.mappings.entity.InstructorDetail;
+import hibernate.advanced.mappings.entity.Review;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,20 +23,49 @@ public class MappingsApplication {
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 
 		return runner -> {
-//			createInstructor(appDAO);
-//			findInstructorById(appDAO);
-//			findInstructorDetailById(appDAO);
-//			deleteInstructor(appDAO);
-//			deleteInstructorDetail(appDAO);
-//			createInstructorWithCourses(appDAO);
-//			findInstructorWithCourses(appDAO);
-//			findCoursesForInstructor(appDAO);
-//			findInstructorWithCoursesJoinFetch(appDAO);
-//			updateInstructor(appDAO);
-//            updateCourse(appDAO);
-			deleteCourse(appDAO);
+
+//			createCourseAndReviews(appDAO);
+
+//			retrieveCourseAndReviews(appDAO);
+			deleteCourseAndReviews(appDAO);
 		};
 
+	}
+
+	private void deleteCourseAndReviews(AppDAO appDAO) {
+
+		int theId = 10;
+		System.out.println("Deleting the course id: " + theId);
+		appDAO.deleteCourseById(theId);
+		System.out.println("Done!");
+	}
+
+	private void retrieveCourseAndReviews(AppDAO appDAO) {
+
+		int theId = 10;
+		Course course = appDAO.findCourseAndReviewsByCourseId(theId);
+
+		System.out.println(course);
+
+		System.out.println("Course reviews: " + course.getReviews());
+	}
+
+	private void createCourseAndReviews(AppDAO appDAO) {
+
+		// create a course
+		Course course = new Course("Hibernate");
+
+		// add some reviews
+		course.addReview(new Review("Feels good to finally do jpa!"));
+		course.addReview(new Review("Wow! so much discovery"));
+		course.addReview(new Review("Perfect in every way"));
+
+		// save the course and leverage the cascade all
+		System.out.println("Saving the course");
+		System.out.println(course.getReviews());
+
+		appDAO.save(course);
+		System.out.println("Done!!");
 	}
 
 	private void deleteCourse(AppDAO appDAO) {

@@ -42,12 +42,6 @@ public class Instructor {
     @Column(name="email")
     private String email;
 
-    public Instructor(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
@@ -55,6 +49,11 @@ public class Instructor {
     @OneToMany(mappedBy= "instructor", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Course> courses;
 
+    public Instructor(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     @Override
     public String toString() {
