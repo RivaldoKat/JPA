@@ -30,8 +30,45 @@ public class MappingsApplication {
 //			createInstructorWithCourses(appDAO);
 //			findInstructorWithCourses(appDAO);
 //			findCoursesForInstructor(appDAO);
-			findInstructorWithCoursesJoinFetch(appDAO);
+//			findInstructorWithCoursesJoinFetch(appDAO);
+//			updateInstructor(appDAO);
+//            updateCourse(appDAO);
+			deleteCourse(appDAO);
 		};
+
+	}
+
+	private void deleteCourse(AppDAO appDAO) {
+
+		int theId = 10;
+
+		System.out.println("Deleting the course id: " + theId);
+
+		appDAO.deleteCourseById(theId);
+	}
+
+	private void updateCourse(AppDAO appDAO) {
+
+        int theId = 10;
+
+        // find the course
+        System.out.println("Finding course ID: " + theId);
+        Course course = appDAO.findCourseById(theId);
+        System.out.println("The course name: " + course.getTitle());
+        System.out.print("Update the course");
+        course.setTitle("SCSC010");
+        appDAO.update(course);
+    }
+
+    private void updateInstructor(AppDAO appDAO) {
+
+		int theId = 21;
+
+		System.out.println("Finding instructor id: " + theId);
+		Instructor instructor = appDAO.findInstructorById(theId);
+		System.out.println("Updating the last name");
+		instructor.setLastName("firstUpdate");
+		appDAO.update(instructor);
 	}
 
 	private void findInstructorWithCoursesJoinFetch(AppDAO appDAO) {
@@ -113,7 +150,7 @@ public class MappingsApplication {
 
 	private void deleteInstructor(AppDAO appDAO) {
 
-		int theId = 1;
+		int theId = 2;
 		System.out.println("Deleting instructor id: " + theId);
 		appDAO.deleteInstructorById(theId);
 		System.out.println("Deleted");

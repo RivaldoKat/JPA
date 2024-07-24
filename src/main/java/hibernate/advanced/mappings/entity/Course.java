@@ -3,12 +3,11 @@ package hibernate.advanced.mappings.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 
 
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @Entity
 @Table(name="course")
 public class Course {
@@ -20,7 +19,11 @@ public class Course {
     private int id;
 
     @Column(name="title")
-    private final String title;
+    private String title;
+
+    public Course(String title) {
+        this.title = title;
+    }
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name= "instructor_id")

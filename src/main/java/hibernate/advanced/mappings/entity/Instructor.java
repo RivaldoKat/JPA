@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @Entity
 @Table(name="instructor")
 public class Instructor {
@@ -35,13 +34,19 @@ public class Instructor {
     private int id;
 
     @Column(name="first_name")
-    private final String firstName;
+    private String firstName;
 
     @Column(name="last_name")
-    private final String lastName;
+    private String lastName;
 
     @Column(name="email")
-    private final String email;
+    private String email;
+
+    public Instructor(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_detail_id")
